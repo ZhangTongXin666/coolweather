@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -74,7 +75,7 @@ public class WeatherActivity extends AppCompatActivity {
         }else {
             loadBingPic();
         }
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
         if (weatherString != null){
             Weather weather = Utility.handleWeatherResponse(weatherString);
@@ -132,7 +133,7 @@ public class WeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (weather != null && weather.status.equals("ok")){
-                            SharedPreferences pref = getPreferences(0);
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putString("weather", responseText);
                             editor.apply();
